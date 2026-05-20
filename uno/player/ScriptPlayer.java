@@ -9,8 +9,8 @@ public class ScriptPlayer extends AbstractPlayer {
     }
     
     @Override
-    public void placeCard(int index){
-        hand.remove(index);
+    public Card placeCard(int index){
+        return hand.remove(index);
     }
 
     @Override

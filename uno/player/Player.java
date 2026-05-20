@@ -6,7 +6,7 @@ public interface Player {
 
     public int getId();
 
-    public void placeCard(int index);
+    public Card placeCard(int index);
 
     public void drawCard(Card cardDrawn);
 

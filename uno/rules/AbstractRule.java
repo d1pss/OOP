@@ -25,10 +25,17 @@ public abstract class AbstractRule implements Rule{
         this.afterWlidCardColor = afterWlidCardColor;
     }
 
-    public void applyRulesToCard(Card playerCard, Uno game){
+    public void applyRulesToCard(Card playerCard, Uno game) throws Exception{
+        Card topCard = null;
+        try {
+            topCard = game.getTopCard();
+        } catch (Exception e) {
+            throw e;
+        }
+
         //check if the card played by the player is valid, if not throw an exception
-        if(!isValidPlay(game.getTopCard(), playerCard)){
-            //throw new IllegalPlayException("");
+        if(!isValidPlay(topCard, playerCard)){
+            throw new Exception("Card used is not valid");
         }
 
         //if the card is valid, apply the effects of the card
@@ -100,7 +107,7 @@ public abstract class AbstractRule implements Rule{
         for(int i = 0; i < numberOfCardsToDraw; i++){
             
             //draw card from unused cards pile
-            Card drawnCard =  game.DrawCardFromPile();
+            Card drawnCard = game.DrawCardFromPile();
 
             //add card to player hand
             player.drawCard(drawnCard);

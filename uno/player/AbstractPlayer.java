@@ -20,7 +20,7 @@ public abstract class AbstractPlayer implements Player {
         return id;
     }
 
-    public abstract void placeCard(int index);
+    public abstract Card placeCard(int index);
 
     public abstract void drawCard(Card cardDrawn);
 }

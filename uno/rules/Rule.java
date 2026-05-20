@@ -23,5 +23,5 @@ public interface Rule {
      * @param playerCard the card to be played
      * @param game the game instance
      */
-    public void applyRulesToCard(Card playerCard, Uno game);
+    public void applyRulesToCard(Card playerCard, Uno game) throws Exception;
 }
