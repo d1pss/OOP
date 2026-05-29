@@ -2,6 +2,6 @@ package uno.cards;
 
 public interface CardFactory {
 
-    public Card createCard(char color, String type);
+    public Card createCard(String color, String type);
     
 } 

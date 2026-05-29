@@ -2,7 +2,7 @@ package uno.cards;
 
 public class ClassicCard extends AbstractCard{
 
-    public ClassicCard(char color, String type){
+    public ClassicCard(String color, String type){
         super(color, type);
     }
     
@@ -21,7 +21,7 @@ public class ClassicCard extends AbstractCard{
     @Override
     public boolean isWildCard(){
         //if the card color is 'W', it is a wild card
-        if(this.getCardColor() == 'W') return true;
+        if(this.getCardColor().equals("W")) return true;
         return false;
     }
 

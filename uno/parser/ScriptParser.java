@@ -1,9 +1,10 @@
 package uno.parser;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+
+import uno.gameEngine.GameCommands;
 
 /**
  * Support class for the UNO project.
@@ -42,7 +43,7 @@ public class ScriptParser extends AbstractParser implements AutoCloseable {
      *
      * @throws IOException if an I/O error occurs while reading the file
      */
-    public void nextCommand() throws IOException {
+    public void nextCommand(GameCommands commands) throws IOException {
         String line;
         while ((line = reader.readLine()) != null) {
             String cleaned = cleanLine(line);
@@ -64,20 +65,14 @@ public class ScriptParser extends AbstractParser implements AutoCloseable {
                 }
                 int idx = Integer.parseInt(parts[3]);
 
-                // In the actual UNO project, replace this print by the
-                // initialization of the in-memory objects required by your solution
-                System.out.println("playerId: " + playerId +
-                                   " command: PLAY index: " + idx);
+                commands.commandPlayCard(playerId, idx);
 
             } else if ("DRAW".equalsIgnoreCase(cmd)) {
                 if (parts.length != 3) {
                     throw new IllegalArgumentException("DRAW has no arguments: " + line);
                 }
 
-                // In the actual UNO project, replace this print by the
-                // initialization of the in-memory objects required by your solution
-                System.out.println("playerId: " + playerId +
-                                   " command: DRAW");
+                commands.commandDrawCard(playerId);
 
             } else if ("COLOR".equalsIgnoreCase(cmd)) {
                 if (parts.length != 4) {
@@ -85,10 +80,7 @@ public class ScriptParser extends AbstractParser implements AutoCloseable {
                 }
                 String colorCode = parts[3];
 
-                // In the actual UNO project, replace this print by the
-                // initialization of the in-memory objects required by your solution
-                System.out.println("playerId: " + playerId +
-                                   " command: COLOR color: " + colorCode);
+                commands.commandSetColorAfterWildCard(playerId, colorCode);
 
             } else {
                 throw new IllegalArgumentException("Unknown command: " + cmd + " in line " + line);
@@ -108,29 +100,4 @@ public class ScriptParser extends AbstractParser implements AutoCloseable {
         reader.close();
     }
 
-    /**
-     * Small standalone test program that reads a script file and prints the
-     * extracted command information to the terminal.
-     *
-     * <p>This is only intended to illustrate how the support class works.
-     * In the actual UNO project, students are expected to integrate this logic
-     * into their own solution and create the appropriate in-memory objects.</p>
-     *
-     * @param args command-line arguments; {@code args[0]} must be the script file
-     */
-    /*public static void main(String[] args) {
-        if (args.length != 1) {
-            System.err.println("Usage: java examplescript.ScriptParser <scriptFile>");
-            System.exit(1);
-        }
-
-        String scriptFile = args[0];
-        try (Reader reader = new FileReader(scriptFile);
-             ScriptParser parser = new ScriptParser(reader)) {
-            parser.nextCommand();
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-            System.exit(1);
-        }
-    }*/
 }

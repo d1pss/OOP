@@ -1,7 +1,6 @@
 package uno.parser;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -56,35 +55,9 @@ public class DeckLoader extends AbstractParser {
             String color = parts[0];
             String rank = parts[1];
 
-            drawPile.add(cardFactory.createCard(color.toCharArray()[0], rank));
+            drawPile.add(cardFactory.createCard(color, rank));
         }
         return drawPile;
     }
 
-    /**
-     * Small standalone test program that reads a deck file and prints the
-     * extracted color/rank pairs to the terminal.
-     *
-     * <p>This is only intended to illustrate how the support class works.
-     * In the actual UNO project, students are expected to integrate this logic
-     * into their own solution and create the appropriate in-memory objects.</p>
-     *
-     * @param args command-line arguments; {@code args[0]} must be the deck file
-     */
-    /*public static void main(String[] args) {
-        if (args.length != 1) {
-            System.err.println("Usage: java exampledeck.DeckLoader <deckFile>");
-            System.exit(1);
-        }
-
-        String deckFile = args[0];
-
-        try (Reader reader = new FileReader(deckFile)) {
-            DeckLoader loader = new DeckLoader();
-            loader.loadDeck(reader);
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-            System.exit(1);
-        }
-    }*/
 }

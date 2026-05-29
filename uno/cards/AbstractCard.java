@@ -1,10 +1,10 @@
 package uno.cards;
 
 public abstract class AbstractCard implements Card{
-    private char color;
+    private String color;
     private String type;
     
-    public AbstractCard(char color, String type){
+    public AbstractCard(String color, String type){
         this.color = color;
         this.type = type;
     }
@@ -13,7 +13,7 @@ public abstract class AbstractCard implements Card{
         return color + "-" + type;
     }
 
-    public char getCardColor(){
+    public String getCardColor(){
         return color;
     }
 
