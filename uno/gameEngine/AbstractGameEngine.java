@@ -38,6 +38,7 @@ public abstract class AbstractGameEngine implements EffectContext, GameCommands{
     //Parsers
     protected DeckLoader deckLoader;
     protected ScriptParser scriptParser;
+    protected ScriptParserFactory scriptParserFactory;
 
     //Game Variables
     protected int idPlayerInCurrTurn;
@@ -51,7 +52,7 @@ public abstract class AbstractGameEngine implements EffectContext, GameCommands{
 
     
 
-    protected AbstractGameEngine(int numberOfPlayers, CardFactory cardFactory, PlayerFactory playerFactory, Rule ruleSet, OutputCommand out){
+    protected AbstractGameEngine(int numberOfPlayers, CardFactory cardFactory, PlayerFactory playerFactory, Rule ruleSet, OutputCommand out, DeckLoader deckLoader, ScriptParserFactory scriptParserFactory){
         //Players
         this.playerFactory = playerFactory;
         this.numberOfPlayers = numberOfPlayers;
@@ -66,8 +67,9 @@ public abstract class AbstractGameEngine implements EffectContext, GameCommands{
         this.ruleSet = ruleSet;
         
         //Parser
-        deckLoader = new DeckLoader();
+        this.deckLoader = deckLoader;
         scriptParser = null;
+        this.scriptParserFactory = scriptParserFactory;
 
         this.out = out;
     }

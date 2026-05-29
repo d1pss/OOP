@@ -24,15 +24,15 @@ public class NormalGameEngine extends AbstractGameEngine {
     // Used Singleton Patern
     private static NormalGameEngine instance = null;
 
-    public static NormalGameEngine getInstance(int numberOfPlayers, CardFactory cardFactory, PlayerFactory playerFactory, Rule ruleSet, OutputCommand out){
+    public static NormalGameEngine getInstance(int numberOfPlayers, CardFactory cardFactory, PlayerFactory playerFactory, Rule ruleSet, OutputCommand out, DeckLoader deckLoader, ScriptParserFactory scriptParserFactory){
         if(instance == null){
-            instance = new NormalGameEngine(numberOfPlayers, cardFactory, playerFactory, ruleSet, out);
+            instance = new NormalGameEngine(numberOfPlayers, cardFactory, playerFactory, ruleSet, out, deckLoader, scriptParserFactory);
         }
         return instance;
     }
 
-    private NormalGameEngine(int numberOfPlayers, CardFactory cardFactory, PlayerFactory playerFactory, Rule ruleSet, OutputCommand out){
-        super(numberOfPlayers, cardFactory, playerFactory, ruleSet, out);
+    private NormalGameEngine(int numberOfPlayers, CardFactory cardFactory, PlayerFactory playerFactory, Rule ruleSet, OutputCommand out, DeckLoader deckLoader, ScriptParserFactory scriptParserFactory){
+        super(numberOfPlayers, cardFactory, playerFactory, ruleSet, out, deckLoader, scriptParserFactory);
     }
 
 
@@ -212,7 +212,7 @@ public class NormalGameEngine extends AbstractGameEngine {
         }
 
         //init thescript parser and load the deck
-        scriptParser = new ScriptParser(script);
+        scriptParser = new NormalScriptParser(script);
         try {
             drawPile = deckLoader.createDeck(deck, cardFactory);
         } catch (Exception e) {
