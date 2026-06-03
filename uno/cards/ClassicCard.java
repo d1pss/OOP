@@ -9,20 +9,22 @@ public class ClassicCard extends AbstractCard{
     @Override
     public boolean isNumberCard(){
         //if the card is a wild card, it is not a number card
-        if(isWildCard()) return false;
+        //if(isWildCard()) return false;
         
         //if the card is a special card, it is not a number card
         String cardtype = this.getCardType();
-        if(cardtype.equals("SKIP") || cardtype.equals("REVERSE") || cardtype.equals("DRAW_TWO")) return false;
+        //if(cardtype.equals("SKIP") || cardtype.equals("REVERSE") || cardtype.equals("DRAW_TWO")) return false;
+        //return true;
 
-        return true;
+        return(isWildCard() || cardtype.equals("SKIP") || cardtype.equals("REVERSE") || cardtype.equals("DRAW_TWO"));
     }
 
     @Override
     public boolean isWildCard(){
         //if the card color is 'W', it is a wild card
-        if(this.getCardColor().equals("W")) return true;
-        return false;
+        //if(this.getCardColor().equals("W")) return true;
+        //return false;
+        return this.getCardColor().equals("W");
     }
 
 }

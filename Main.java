@@ -1,11 +1,10 @@
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.FileNotFoundException;
 import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
-
 import uno.cardEffect.CardEffect;
 import uno.cardEffect.DrawCardsEffect;
 import uno.cardEffect.ReverseEffect;
@@ -22,6 +21,7 @@ import uno.rules.ClassicRule;
 public class Main {
    public static void main(String[] argv) {
         
+        // At least 3  arguments are necessary
         if (argv.length < 3) {
             System.err.println("Uso: java -jar project-v1.jar <deckFile> <scriptFile> <playerCount> [<cardsPerPlayer>]");
             return;
@@ -32,7 +32,7 @@ public class Main {
         int playerCount = Integer.parseInt(argv[2]); 
 
         //declaration of the card effects
-        Map<String, CardEffect> cardEffects = new HashMap<>();
+        Map<String, CardEffect> cardEffects = new HashMap<>(); // Correlates the key (inside the string) into the object that is CardEffect, containing its atributes and methods (declared directly by a fit contructor)
         cardEffects.put("SKIP", new SkipEffect(1));
         cardEffects.put("REVERSE", new ReverseEffect());
         cardEffects.put("DRAW_TWO", new DrawCardsEffect(2));

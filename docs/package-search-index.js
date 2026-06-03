@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"uno.cardEffect"},{"l":"uno.cards"},{"l":"uno.gameEngine"},{"l":"uno.output"},{"l":"uno.parser"},{"l":"uno.players"},{"l":"uno.rules"}];updateSearchResults();
