@@ -4,7 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.Map; // Java libs
 import uno.cardEffect.CardEffect;
 import uno.cardEffect.DrawCardsEffect;
 import uno.cardEffect.ReverseEffect;
@@ -16,7 +16,8 @@ import uno.output.ClassicOutput;
 import uno.parser.NormalDeckLoader;
 import uno.parser.NormalScriptParserFactory;
 import uno.players.ScriptPlayerFactory;
-import uno.rules.ClassicRule;
+import uno.rules.ClassicRule; // Game libs
+
 
 public class Main {
    public static void main(String[] argv) {
