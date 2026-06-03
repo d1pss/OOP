@@ -20,6 +20,7 @@ public abstract class AbstractCard implements Card{
     public String getCardType(){
         return type;
     }
+    
 
     public abstract boolean isNumberCard();
 

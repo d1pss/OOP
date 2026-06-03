@@ -20,6 +20,14 @@ public interface OutputCommand {
 
     public void outputTurnAdvance(int nextPlayerId);
 
+    public void outputWild();
+
+    public void outputGameEndPlayerWin(int winnerPlayerId);
+
+    public void outputGameEndNoWinners();
+
+    public void outputError(String s);
+
     public void newLine();
 
 }

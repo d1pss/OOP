@@ -36,9 +36,9 @@ public abstract class AbstractGameEngine implements EffectContext, GameCommands{
     protected final Rule ruleSet;
 
     //Parsers
-    protected DeckLoader deckLoader;
+    protected final DeckLoader deckLoader;
     protected ScriptParser scriptParser;
-    protected ScriptParserFactory scriptParserFactory;
+    protected final ScriptParserFactory scriptParserFactory;
 
     //Game Variables
     protected int idPlayerInCurrTurn;
@@ -72,6 +72,7 @@ public abstract class AbstractGameEngine implements EffectContext, GameCommands{
         this.scriptParserFactory = scriptParserFactory;
 
         this.out = out;
+        isGameMovingClockwise = true;
     }
 
     /*-------------------------------------------------------------------------------------------*/
@@ -96,11 +97,11 @@ public abstract class AbstractGameEngine implements EffectContext, GameCommands{
     /*----------------------------------- Command Operations ------------------------------------*/
     /*-------------------------------------------------------------------------------------------*/
 
-    public abstract void commandPlayCard(int playerId, int cardIndex);
+    public abstract boolean commandPlayCard(int playerId, int cardIndex);
 
-    public abstract void commandDrawCard(int playerId);
+    public abstract boolean commandDrawCard(int playerId);
 
-    public abstract void commandSetColorAfterWildCard(int playerId, String color);
+    public abstract boolean commandSetColorAfterWildCard(int playerId, String color);
 
     /*-------------------------------------------------------------------------------------------*/
     /*-------------------------------------------------------------------------------------------*/

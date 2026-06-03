@@ -47,7 +47,8 @@ public class NormalGameEngine extends AbstractGameEngine {
             try {
                 cardDrwan = drawCardFromPile();
             } catch (Exception e) {
-                // TODO: handle exception
+                out.outputGameEndNoWinners();
+                return;
             }
             
             player.drawCard(cardDrwan);
@@ -55,11 +56,7 @@ public class NormalGameEngine extends AbstractGameEngine {
     }
 
     public void reverseWay(){
-        if(isGameMovingClockwise){
-            isGameMovingClockwise = false;
-        }else{
-            isGameMovingClockwise = true;
-        }
+        isGameMovingClockwise = !isGameMovingClockwise;
     }
 
     public void skipPlayers(int numberSkips){
@@ -117,7 +114,7 @@ public class NormalGameEngine extends AbstractGameEngine {
         if(drawPile.isEmpty()){
             throw new Exception("Draw pile is empty");
         }
-        return drawPile.removeLast();
+        return drawPile.removeFirst();
     }
 
     /*-------------------------------------------------------------------------------------------*/
@@ -128,18 +125,29 @@ public class NormalGameEngine extends AbstractGameEngine {
     /*----------------------------------- Command Operations ------------------------------------*/
     /*-------------------------------------------------------------------------------------------*/
 
-    public void commandPlayCard(int playerId, int cardIndex){
+    public boolean commandPlayCard(int playerId, int cardIndex){
+        if(playerId != idPlayerInCurrTurn){
+            out.outputError("Not player  " + playerId + " turn\n");
+            return true;
+        }
+        if(players.get(playerId).getHand().size() <= cardIndex || cardIndex < 0){
+            //out.outputError("Player " + playerId + " does not have a card in index " + cardIndex + "\n");
+            return true;
+        }
+
         Card cardToBePlayed = players.get(playerId).placeCard(cardIndex);
 
         Card topCard = null;
         try {
             topCard = getTopCard();
         } catch (Exception e) {
-            // TODO: handle exception
+            out.outputError("No top card available\n");
+            return true;
         }
 
         if(!ruleSet.isPlayable(topCard, cardToBePlayed, afterWlidCardColor)){
-            // TODO invalid play exit
+            out.outputError("Card " + cardToBePlayed.getCardString() + " is not playable\n");
+            return true;
         }
 
         if(cardToBePlayed.isWildCard()) lastWildCardPlayerId = playerId;
@@ -150,21 +158,28 @@ public class NormalGameEngine extends AbstractGameEngine {
 
         effect.execute(this, out, playerId, cardToBePlayed);
 
+        if(drawPile.isEmpty()) return true;
+
         discardCardToPile(cardToBePlayed);
+
+        if(players.get(playerId).getHand().isEmpty()){
+            out.outputGameEndPlayerWin(playerId);
+        }
         
         if(!cardToBePlayed.isWildCard()){
             nextTurn();
-            out.outputTurnAdvance(playerId);
+            out.outputTurnAdvance(idPlayerInCurrTurn);
         }
-        
+        return false;
     }
 
-    public void commandDrawCard(int playerId){
+    public boolean commandDrawCard(int playerId){
         Card drawnCard = null;
         try {
             drawnCard = drawCardFromPile();
         } catch (Exception e) {
-            // TODO: handle exception
+            out.outputGameEndNoWinners();
+            return true;
         }
 
         players.get(playerId).drawCard(drawnCard);
@@ -172,25 +187,36 @@ public class NormalGameEngine extends AbstractGameEngine {
         out.outputDrawCardFromPile(playerId, drawnCard);
 
         nextTurn();
-        out.outputTurnAdvance(playerId);
+        out.outputTurnAdvance(idPlayerInCurrTurn);
+        return false;
     }
 
-    public void commandSetColorAfterWildCard(int playerId, String color){
+    public boolean commandSetColorAfterWildCard(int playerId, String color){
        Card topCard = null;
         try {
             topCard = getTopCard();
         } catch (Exception e) {
-            // TODO: handle exception
+            out.outputError("No top card available\n");
+            return true;
         }
 
-        if(!topCard.isWildCard() || playerId != lastWildCardPlayerId){
-            //TODO canot set color after normal or special card or anhother player setting the color
+        if(!topCard.isWildCard()){
+            out.outputError("Can only change color if last card was a Wild card\n");
+            return true;
+        }
+
+        if(playerId != lastWildCardPlayerId){
+            out.outputError("Only player " + lastWildCardPlayerId + " can choose the color\n");
+            return true;
         }
 
         afterWlidCardColor = color;
 
+        out.outputChoseColor(playerId, color);
+
         nextTurn();
-        out.outputTurnAdvance(playerId);
+        out.outputTurnAdvance(idPlayerInCurrTurn);
+        return false;
     }
 
     private void nextTurn(){
@@ -208,7 +234,8 @@ public class NormalGameEngine extends AbstractGameEngine {
     public void startGame(Reader deck, Reader script){
         //check if the number of players is valid for the rule set
         if(!ruleSet.isNumberOfPlayersValid(numberOfPlayers)){
-            // TODO exit in this case
+            out.outputError("Number of Players is not valid\n");
+            return;
         }
 
         //init thescript parser and load the deck
@@ -257,7 +284,7 @@ public class NormalGameEngine extends AbstractGameEngine {
         out.outputGameStart(players, topCard);
 
         try {
-            scriptParser.nextCommand(this);
+            scriptParser.nextCommand(this, out);
         } catch (Exception e) {
             // TODO: handle exception
         }

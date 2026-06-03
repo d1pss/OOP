@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.Reader;
 
 import uno.gameEngine.GameCommands;
+import uno.output.OutputCommand;
 
 /**
  * Support class for the UNO project.
@@ -43,7 +44,7 @@ public class NormalScriptParser extends AbstractParser implements AutoCloseable,
      *
      * @throws IOException if an I/O error occurs while reading the file
      */
-    public void nextCommand(GameCommands commands) throws IOException {
+    public void nextCommand(GameCommands commands, OutputCommand output) throws IOException {
         String line;
         while ((line = reader.readLine()) != null) {
             String cleaned = cleanLine(line);
@@ -64,15 +65,21 @@ public class NormalScriptParser extends AbstractParser implements AutoCloseable,
                     throw new IllegalArgumentException("PLAY requires index: " + line);
                 }
                 int idx = Integer.parseInt(parts[3]);
-
-                commands.commandPlayCard(playerId, idx);
+                
+                output.outputCommand(cleaned);
+                if(commands.commandPlayCard(playerId, idx)){
+                    return;
+                }
 
             } else if ("DRAW".equalsIgnoreCase(cmd)) {
                 if (parts.length != 3) {
                     throw new IllegalArgumentException("DRAW has no arguments: " + line);
                 }
 
-                commands.commandDrawCard(playerId);
+                output.outputCommand(cleaned);
+                if(commands.commandDrawCard(playerId)){
+                    return;
+                }
 
             } else if ("COLOR".equalsIgnoreCase(cmd)) {
                 if (parts.length != 4) {
@@ -80,7 +87,10 @@ public class NormalScriptParser extends AbstractParser implements AutoCloseable,
                 }
                 String colorCode = parts[3];
 
-                commands.commandSetColorAfterWildCard(playerId, colorCode);
+                output.outputCommand(cleaned);
+                if(commands.commandSetColorAfterWildCard(playerId, colorCode)){
+                    return;
+                }
 
             } else {
                 throw new IllegalArgumentException("Unknown command: " + cmd + " in line " + line);

@@ -10,6 +10,7 @@ import uno.cardEffect.CardEffect;
 import uno.cardEffect.DrawCardsEffect;
 import uno.cardEffect.ReverseEffect;
 import uno.cardEffect.SkipEffect;
+import uno.cardEffect.WildEffect;
 import uno.cards.ClassicCardFactory;
 import uno.gameEngine.NormalGameEngine;
 import uno.output.ClassicOutput;
@@ -35,6 +36,7 @@ public class Main {
         cardEffects.put("SKIP", new SkipEffect(1));
         cardEffects.put("REVERSE", new ReverseEffect());
         cardEffects.put("DRAW_TWO", new DrawCardsEffect(2));
+        cardEffects.put("WILD", new WildEffect());
         cardEffects.put("WILD_DRAW_FOUR", new DrawCardsEffect(4)); 
 
 
