@@ -4,19 +4,13 @@ package uno.gameEngine;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
-
-//Player
-import uno.players.Player;
-import uno.players.PlayerFactory;
-//Cards
 import uno.cards.Card;
 import uno.cards.CardFactory;
 import uno.output.OutputCommand;
-//Rules
-import uno.rules.Rule;
-
-//Parser
 import uno.parser.*;
+import uno.players.Player;
+import uno.players.PlayerFactory;
+import uno.rules.Rule;
 
 
 public abstract class AbstractGameEngine implements EffectContext, GameCommands{
@@ -79,15 +73,19 @@ public abstract class AbstractGameEngine implements EffectContext, GameCommands{
     /*--------------------------------------- Efects Context ------------------------------------*/
     /*-------------------------------------------------------------------------------------------*/
 
-    
+    @Override
     public abstract void drawCards(Player player, int numberCardsToDraw);
 
+    @Override
     public abstract void reverseWay();
 
+    @Override
     public abstract void skipPlayers(int numberSkips);
 
+    @Override
     public abstract List<Player> getReadOnlyPlayersList();
 
+    @Override
     public abstract int nextPlayerId();
 
     /*-------------------------------------------------------------------------------------------*/
@@ -97,10 +95,13 @@ public abstract class AbstractGameEngine implements EffectContext, GameCommands{
     /*----------------------------------- Command Operations ------------------------------------*/
     /*-------------------------------------------------------------------------------------------*/
 
+    @Override
     public abstract boolean commandPlayCard(int playerId, int cardIndex);
 
+    @Override
     public abstract boolean commandDrawCard(int playerId);
 
+    @Override
     public abstract boolean commandSetColorAfterWildCard(int playerId, String color);
 
     /*-------------------------------------------------------------------------------------------*/

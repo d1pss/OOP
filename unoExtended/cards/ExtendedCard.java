@@ -11,19 +11,22 @@ public class ExtendedCard extends AbstractCard{
     @Override
     public boolean isNumberCard(){
         //if the card is a wild card, it is not a number card
-        if(isWildCard()) return false;
+        //if(isWildCard()) return false;
         
         //if the card is a special card, it is not a number card
         String cardtype = this.getCardType();
-        if(cardtype.equals("SKIP") || cardtype.equals("REVERSE") || cardtype.equals("DRAW_TWO") || cardtype.equals("DRAW_THREE")) return false;
-
-        return true;
+        //if(cardtype.equals("SKIP") || cardtype.equals("REVERSE") || cardtype.equals("DRAW_TWO") || cardtype.equals("DRAW_THREE")) return false;
+        return !(isWildCard() || cardtype.equals("SKIP") || cardtype.equals("REVERSE") || cardtype.equals("DRAW_TWO") || cardtype.equals("DRAW_THREE"));
+        
+        
+        //return true; // if there is no other symbol present in the cards but numbers
     }
 
     @Override
     public boolean isWildCard(){
         //if the card color is 'W', it is a wild card
-        if(this.getCardColor().equals("W")) return true;
-        return false;
+        //if(this.getCardColor().equals("W")) return true;
+        //return false;
+        return this.getCardColor().equals("W");
     }
 }
