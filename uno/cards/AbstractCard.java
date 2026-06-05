@@ -44,10 +44,10 @@ public abstract class AbstractCard implements Card {
     public String getCardType() {
         return type;
     }
-    
+
     @Override
     public abstract boolean isNumberCard();
-
+    
     @Override
     public abstract boolean isWildCard();
 

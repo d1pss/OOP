@@ -1,7 +1,6 @@
 package uno.rules;
 
 import java.util.Map;
-
 import uno.cardEffect.*;
 import uno.cards.Card;
 
