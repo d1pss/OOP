@@ -1,6 +1,12 @@
 package uno.parser;
 
-public class AbstractParser {
+/**
+ * Provides a foundational structure for file parsers in the UNO game.
+ * This abstract class supplies common utility methods for reading and 
+ * sanitizing input data, ensuring consistent file processing across 
+ * different parser implementations (e.g., scripts and decks).
+ */
+public abstract class AbstractParser {
     
     /**
      * Cleans one line of the script file.

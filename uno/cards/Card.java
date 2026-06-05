@@ -1,35 +1,48 @@
 package uno.cards;
 
+/**
+ * Represents a playing card in the UNO game.
+ * Defines the core attributes and behaviors expected from any card, 
+ * including its color, type (rank), and string representation. 
+ * This contract allows the game engine to handle numeric, action, 
+ * and wild cards uniformly, while supporting future extensions.
+ */
 public interface Card {
     
     /**
-     * Returns a string representation of the card, in the format "color-type"
-     * @return a string representation of the card
+     * Gets the formatted string representation of the card.
+     * Typically formatted as "Color-Type".
+     *
+     * @return The formatted string identifier of the card.
      */
     public String getCardString();
 
     /**
-     * Returns the color of the card, represented as a character ('R', 'G', 'B', 'Y', 'W') or other if extended
-     * @return the color of the card
+     * Retrieves the color of the card.
+     * 
+     * @return The string representing the card's color.
      */
     public String getCardColor();
     
     /**
-     * Returns the type of the card, represented as a string ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "SKIP", "REVERSE", "DRAW_TWO", "WILD", "WILD_DRAW_FOUR") or other if extended
-     * @return the type of the card
+     * Retrieves the type (or rank) of the card.
+     * 
+     * @return The string representing the card's specific type or action.
      */
     public String getCardType();
 
     /**
-     * Returns true if the card is a number card (0-9), false otherwise
-     * @return true if the card is a number card, false otherwise
+     * Checks whether this card is a standard numeric card.
+     *
+     * @return {@code true} if the card is a number card (0-9) or other if extended; {@code false} otherwise.
      */
     public boolean isNumberCard();
 
     /**
-     * Returns true if the card is a wild card (WILD or WILD_DRAW_FOUR or others if extended), false otherwise
-     * @return true if the card is a wild card, false otherwise
+     * Checks whether this card is a wild card.
+     * Wild cards typically allow the player to change the active game color.
+     *
+     * @return {@code true} if the card is a wild card; {@code false} otherwise.
      */
     public boolean isWildCard();
 }
-

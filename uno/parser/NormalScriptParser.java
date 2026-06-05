@@ -23,6 +23,9 @@ import uno.output.OutputCommand;
  */
 public class NormalScriptParser extends AbstractParser implements AutoCloseable,ScriptParser {
 
+    /**
+     * The buffered reader used to read the script file line by line.
+     */
     private final BufferedReader reader;
 
     /**

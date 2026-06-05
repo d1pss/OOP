@@ -9,7 +9,7 @@ import uno.cardEffect.CardEffect;
 import uno.cardEffect.DrawCardsEffect;
 import uno.cardEffect.ReverseEffect;
 import uno.cardEffect.SkipEffect;
-//import uno.cards.ClassicCardFactory; // Modified to use the ExtendedCardFactory instead of the ClassicCardFactory
+import uno.cardEffect.WildEffect;
 import uno.gameEngine.NormalGameEngine;
 import uno.output.ClassicOutput;
 import uno.parser.NormalDeckLoader;
@@ -19,29 +19,56 @@ import uno.rules.ClassicRule;
 
 import unoExtended.cards.ExtendedCardFactory;
 
+/**
+ * The main entry point for the Extended (Crazy) version of the UNO game.
+ * This class handles the initialization of the game engine.
+ */
 public class ExtendedMain {
+    
+    /**
+     * The main method that configures, and runs the extended game.
+     *
+     * @param argv Command-line arguments required to run the game: 
+     *             {@code <deckFile> <scriptFile> <playerCount> [<cardsPerPlayer>]}
+     */
     public static void main(String[] argv) {
         
+        // Validate command-line arguments
         if (argv.length < 3) {
-            System.err.println("Uso: java -jar project-v1.jar <deckFile> <scriptFile> <playerCount> [<cardsPerPlayer>]");
+            System.err.println("Usage: java -jar project-v1.jar <deckFile> <scriptFile> <playerCount> [<cardsPerPlayer>]");
             return;
         }
 
         String deckPath = argv[0];
         String scriptPath = argv[1];
-        int playerCount = Integer.parseInt(argv[2]); 
+        int playerCount = Integer.parseInt(argv[2]);
+        int cardsPerPlayer = 7; // Default value
+        
+        if (argv.length == 4) {
+            cardsPerPlayer = Integer.parseInt(argv[3]);
+            if (cardsPerPlayer < 1) {
+                System.err.println("Error: The number of cards per player must be at least 1.");
+                return;
+            }
+        } 
 
-        //declaration of the card effects
+        // Declaration of the modified (crazy) card effects
         Map<String, CardEffect> cardEffects = new HashMap<>();
-        cardEffects.put("SKIP", new SkipEffect(2)); // Modified to skip two players instead of one to folow the crazy ruleset
+        
+        // Modified to skip two players instead of one to follow the crazy ruleset
+        cardEffects.put("SKIP", new SkipEffect(2)); 
         cardEffects.put("REVERSE", new ReverseEffect());
-        cardEffects.put("DRAW_TWO", new DrawCardsEffect(3)); // Modified to draw three cards instead of two to folow the crazy ruleset
-        cardEffects.put("DRAW_THREE", new DrawCardsEffect(3)); // New effect for drawing three cards
+        // Modified to draw three cards instead of two to follow the crazy ruleset
+        cardEffects.put("DRAW_TWO", new DrawCardsEffect(3)); 
+        // New effect for drawing three cards
+        cardEffects.put("DRAW_THREE", new DrawCardsEffect(3)); 
+        cardEffects.put("WILD", new WildEffect());
         cardEffects.put("WILD_DRAW_FOUR", new DrawCardsEffect(4)); 
 
-
+        // Instantiate the Singleton Game Engine with the Extended dependencies
         NormalGameEngine uno = NormalGameEngine.getInstance(
             playerCount, 
+            cardsPerPlayer,
             new ExtendedCardFactory(), 
             new ScriptPlayerFactory(), 
             new ClassicRule(cardEffects), 
@@ -50,11 +77,11 @@ public class ExtendedMain {
             new NormalScriptParserFactory()
         );
 
+        // Load files and start the game using try-with-resources to prevent resource leaks
         try (
             Reader deckReader = new FileReader(deckPath);
             Reader scriptReader = new FileReader(scriptPath)
         ) {
-            
             uno.startGame(deckReader, scriptReader);
 
         } catch (FileNotFoundException e) {
@@ -62,7 +89,5 @@ public class ExtendedMain {
         } catch (IOException e) {
             System.err.println("Error reading files: " + e.getMessage());
         }
-
-        
     }
 }

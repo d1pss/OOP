@@ -1,90 +1,119 @@
 package uno.gameEngine;
 
-//Java default packages
+// Java default packages
 import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 
-//Player
+// Player
 import uno.players.Player;
 import uno.players.PlayerFactory;
 import uno.cardEffect.CardEffect;
-//Cards
+// Cards
 import uno.cards.Card;
 import uno.cards.CardFactory;
 import uno.output.OutputCommand;
-//Rules
+// Rules
 import uno.rules.Rule;
-
-//Parser
+// Parser
 import uno.parser.*;
 
+/**
+ * The concrete implementation of the UNO game engine for the standard ruleset.
+ * This class applies the Singleton design pattern to ensure only one active game 
+ * instance exists at any given time. It manages the physical execution of game mechanics, 
+ * including pile management, turn rotation, and command processing.
+ */
 public class NormalGameEngine extends AbstractGameEngine {
 
-    // Used Singleton Patern
+    /**
+     * The single, globally accessible instance of the game engine (Singleton Pattern).
+     */
     private static NormalGameEngine instance = null;
 
-    public static NormalGameEngine getInstance(int numberOfPlayers, CardFactory cardFactory, PlayerFactory playerFactory, Rule ruleSet, OutputCommand out, DeckLoader deckLoader, ScriptParserFactory scriptParserFactory){
-        if(instance == null){
-            instance = new NormalGameEngine(numberOfPlayers, cardFactory, playerFactory, ruleSet, out, deckLoader, scriptParserFactory);
+    /**
+     * Retrieves the active instance of the NormalGameEngine, creating it if it doesn't exist yet.
+     *
+     * @param numberOfPlayers     The total number of players joining the game.
+     * @param cardsPerPlayer      The initial number of cards dealt to each player.
+     * @param cardFactory         The factory to create the game cards.
+     * @param playerFactory       The factory to create the players.
+     * @param ruleSet             The specific ruleset to be enforced during the game.
+     * @param out                 The output handler for game logs.
+     * @param deckLoader          The loader to read the deck file.
+     * @param scriptParserFactory The factory to build the script parser.
+     * @return The Singleton instance of the game engine.
+     */
+    public static NormalGameEngine getInstance(int numberOfPlayers, int cardsPerPlayer, CardFactory cardFactory, 
+                                               PlayerFactory playerFactory, Rule ruleSet, OutputCommand out, 
+                                               DeckLoader deckLoader, ScriptParserFactory scriptParserFactory) {
+        if (instance == null) {
+            instance = new NormalGameEngine(numberOfPlayers, cardsPerPlayer, cardFactory, playerFactory, 
+                                            ruleSet, out, deckLoader, scriptParserFactory);
         }
         return instance;
     }
 
-    private NormalGameEngine(int numberOfPlayers, CardFactory cardFactory, PlayerFactory playerFactory, Rule ruleSet, OutputCommand out, DeckLoader deckLoader, ScriptParserFactory scriptParserFactory){
-        super(numberOfPlayers, cardFactory, playerFactory, ruleSet, out, deckLoader, scriptParserFactory);
+    /**
+     * Private constructor to prevent direct instantiation from outside the class.
+     */
+    private NormalGameEngine(int numberOfPlayers, int cardsPerPlayer, CardFactory cardFactory, 
+                             PlayerFactory playerFactory, Rule ruleSet, OutputCommand out, 
+                             DeckLoader deckLoader, ScriptParserFactory scriptParserFactory) {
+        super(numberOfPlayers, cardsPerPlayer, cardFactory, playerFactory, ruleSet, out, deckLoader, scriptParserFactory);
     }
 
-
     /*-------------------------------------------------------------------------------------------*/
-    /*--------------------------------------- Efects Context ------------------------------------*/
+    /*--------------------------------------- Effects Context -----------------------------------*/
     /*-------------------------------------------------------------------------------------------*/
 
-    
-    public void drawCards(Player player, int numberCardsToDraw){
-        Card cardDrwan = null;
-        for(int i = 0; i < numberCardsToDraw; i++){
+    @Override
+    public void drawCards(Player player, int numberCardsToDraw) {
+        Card cardDrawn = null;
+        for (int i = 0; i < numberCardsToDraw; i++) {
             try {
-                cardDrwan = drawCardFromPile();
+                cardDrawn = drawCardFromPile();
             } catch (Exception e) {
                 out.outputGameEndNoWinners();
                 return;
             }
-            
-            player.drawCard(cardDrwan);
+            player.drawCard(cardDrawn);
         }
     }
 
-    public void reverseWay(){
+    @Override
+    public void reverseWay() {
         isGameMovingClockwise = !isGameMovingClockwise;
     }
 
-    public void skipPlayers(int numberSkips){
-        for(int i = 0; i < numberSkips; i++){
+    @Override
+    public void skipPlayers(int numberSkips) {
+        for (int i = 0; i < numberSkips; i++) {
             nextTurn();
         }
     }
 
-    public List<Player> getReadOnlyPlayersList(){
+    @Override
+    public List<Player> getReadOnlyPlayersList() {
         return Collections.unmodifiableList(this.players);
     }
 
-
-    public int nextPlayerId(){
-        if(isGameMovingClockwise){
-            //if the game is moving clockwise
-            //if the current player is the last player, the next player is the first player (id 0)
-            if(idPlayerInCurrTurn == numberOfPlayers - 1){
+    @Override
+    public int nextPlayerId() {
+        if (isGameMovingClockwise) {
+            // If the game is moving clockwise:
+            // If the current player is the last player, loop back to the first player (id 0)
+            if (idPlayerInCurrTurn == numberOfPlayers - 1) {
                 return 0;
-            }else{
+            } else {
                 return idPlayerInCurrTurn + 1;
             } 
-        }else{
-            //if the game is moving counterclockwise
-            //if the current player is the first player, the next player is the last player (id numberOfPlayers - 1)
-            if(idPlayerInCurrTurn == 0){
+        } else {
+            // If the game is moving counter-clockwise:
+            // If the current player is the first player, loop back to the last player
+            if (idPlayerInCurrTurn == 0) {
                 return numberOfPlayers - 1;
-            }else{
+            } else {
                 return idPlayerInCurrTurn - 1;
             }
         }
@@ -93,25 +122,40 @@ public class NormalGameEngine extends AbstractGameEngine {
     /*-------------------------------------------------------------------------------------------*/
     /*-------------------------------------------------------------------------------------------*/
 
-
     /*-------------------------------------------------------------------------------------------*/
     /*------------------------------------- Piles Operations ------------------------------------*/
     /*-------------------------------------------------------------------------------------------*/
 
-
-    private Card getTopCard() throws Exception{
-        if(discardPile.isEmpty()){
+    /**
+     * Retrieves the top card from the discard pile without removing it.
+     *
+     * @return The card currently on top of the discard pile.
+     * @throws Exception If the discard pile is empty.
+     */
+    private Card getTopCard() throws Exception {
+        if (discardPile.isEmpty()) {
             throw new Exception("Discard pile is empty");
         }
         return discardPile.getLast();
     }
 
-    private void discardCardToPile(Card card){
+    /**
+     * Adds a played card to the top of the discard pile.
+     *
+     * @param card The card to be discarded.
+     */
+    private void discardCardToPile(Card card) {
         discardPile.add(card);
     }
     
-    private Card drawCardFromPile() throws Exception{
-        if(drawPile.isEmpty()){
+    /**
+     * Removes and returns the top card from the draw pile.
+     *
+     * @return The card drawn from the top of the pile.
+     * @throws Exception If the draw pile is completely empty.
+     */
+    private Card drawCardFromPile() throws Exception {
+        if (drawPile.isEmpty()) {
             throw new Exception("Draw pile is empty");
         }
         return drawPile.removeFirst();
@@ -120,18 +164,18 @@ public class NormalGameEngine extends AbstractGameEngine {
     /*-------------------------------------------------------------------------------------------*/
     /*-------------------------------------------------------------------------------------------*/
 
-
     /*-------------------------------------------------------------------------------------------*/
     /*----------------------------------- Command Operations ------------------------------------*/
     /*-------------------------------------------------------------------------------------------*/
 
-    public boolean commandPlayCard(int playerId, int cardIndex){
-        if(playerId != idPlayerInCurrTurn){
-            out.outputError("Not player  " + playerId + " turn\n");
+    @Override
+    public boolean commandPlayCard(int playerId, int cardIndex) {
+        if (playerId != idPlayerInCurrTurn) {
+            out.outputError("Not player " + playerId + " turn\n");
             return true;
         }
-        if(players.get(playerId).getHand().size() <= cardIndex || cardIndex < 0){
-            //out.outputError("Player " + playerId + " does not have a card in index " + cardIndex + "\n");
+        
+        if (players.get(playerId).getHand().size() <= cardIndex || cardIndex < 0) {
             return true;
         }
 
@@ -145,35 +189,40 @@ public class NormalGameEngine extends AbstractGameEngine {
             return true;
         }
 
-        if(!ruleSet.isPlayable(topCard, cardToBePlayed, afterWlidCardColor)){
+        if (!ruleSet.isPlayable(topCard, cardToBePlayed, afterWildCardColor)) {
             out.outputError("Card " + cardToBePlayed.getCardString() + " is not playable\n");
             return true;
         }
 
-        if(cardToBePlayed.isWildCard()) lastWildCardPlayerId = playerId;
+        if (cardToBePlayed.isWildCard()) {
+            lastWildCardPlayerId = playerId;
+        }
 
         out.outputPlayCard(playerId, cardToBePlayed);
 
         CardEffect effect = ruleSet.getEffectOf(cardToBePlayed);
-
         effect.execute(this, out, playerId, cardToBePlayed);
 
-        if(drawPile.isEmpty()) return true;
+        if (drawPile.isEmpty()) {
+            return true;
+        }
 
         discardCardToPile(cardToBePlayed);
 
-        if(players.get(playerId).getHand().isEmpty()){
+        if (players.get(playerId).getHand().isEmpty()) {
             out.outputGameEndPlayerWin(playerId);
         }
         
-        if(!cardToBePlayed.isWildCard()){
+        if (!cardToBePlayed.isWildCard()) {
             nextTurn();
             out.outputTurnAdvance(idPlayerInCurrTurn);
         }
+        
         return false;
     }
 
-    public boolean commandDrawCard(int playerId){
+    @Override
+    public boolean commandDrawCard(int playerId) {
         Card drawnCard = null;
         try {
             drawnCard = drawCardFromPile();
@@ -183,16 +232,17 @@ public class NormalGameEngine extends AbstractGameEngine {
         }
 
         players.get(playerId).drawCard(drawnCard);
-
         out.outputDrawCardFromPile(playerId, drawnCard);
 
         nextTurn();
         out.outputTurnAdvance(idPlayerInCurrTurn);
+        
         return false;
     }
 
-    public boolean commandSetColorAfterWildCard(int playerId, String color){
-       Card topCard = null;
+    @Override
+    public boolean commandSetColorAfterWildCard(int playerId, String color) {
+        Card topCard = null;
         try {
             topCard = getTopCard();
         } catch (Exception e) {
@@ -200,83 +250,83 @@ public class NormalGameEngine extends AbstractGameEngine {
             return true;
         }
 
-        if(!topCard.isWildCard()){
+        if (!topCard.isWildCard()) {
             out.outputError("Can only change color if last card was a Wild card\n");
             return true;
         }
 
-        if(playerId != lastWildCardPlayerId){
+        if (playerId != lastWildCardPlayerId) {
             out.outputError("Only player " + lastWildCardPlayerId + " can choose the color\n");
             return true;
         }
 
-        afterWlidCardColor = color;
-
+        afterWildCardColor = color;
         out.outputChoseColor(playerId, color);
 
         nextTurn();
         out.outputTurnAdvance(idPlayerInCurrTurn);
+        
         return false;
     }
 
-    private void nextTurn(){
+    /**
+     * Advances the game state to the next player's turn.
+     */
+    private void nextTurn() {
         idPlayerInCurrTurn = nextPlayerId();
     }
 
     /*-------------------------------------------------------------------------------------------*/
     /*-------------------------------------------------------------------------------------------*/
 
-
     /*-------------------------------------------------------------------------------------------*/
     /*--------------------------------------- Main code -----------------------------------------*/
     /*-------------------------------------------------------------------------------------------*/
 
-    public void startGame(Reader deck, Reader script){
-        //check if the number of players is valid for the rule set
-        if(!ruleSet.isNumberOfPlayersValid(numberOfPlayers)){
+    @Override
+    public void startGame(Reader deck, Reader script) {
+        if (!ruleSet.isNumberOfPlayersValid(numberOfPlayers)) {
             out.outputError("Number of Players is not valid\n");
             return;
         }
 
-        //init thescript parser and load the deck
-        scriptParser = new NormalScriptParser(script);
+        scriptParser = scriptParserFactory.createScriptParser(script);
+        
         try {
             drawPile = deckLoader.createDeck(deck, cardFactory);
         } catch (Exception e) {
-            // TODO: handle exception
+            out.outputError("Error loading the deck: " + e.getMessage() + "\n");
+            return; 
         }
 
-        //draw the first card of the deck
         Card topCard = null;
         try {
             topCard = drawCardFromPile();
         } catch (Exception e) {
-            // TODO: handle exception
+            out.outputError("The deck is empty. Cannot draw the first card.\n");
+            return; 
         }
 
-        if(topCard.isWildCard()){
-            // TODO error first top card can not be wild card
+        if (topCard.isWildCard()) {
+            out.outputError("The first card of the game cannot be a Wild card.\n");
+            return; 
         }
 
-        //discard the first card of the deck
         discardCardToPile(topCard);
 
-        //create the players
-        for(int j = 0; j < numberOfPlayers; j++){
+        for (int j = 0; j < numberOfPlayers; j++) {
             players.add(playerFactory.createPlayer(j));
         }
 
-        //deal 7 cards to each player
         Card nextCard = null;
-        for(int i = 0; i < 7; i++){
-            for(int j = 0; j < numberOfPlayers; j++){
-
+        for (int i = 0; i < cardsPerPlayer; i++) {
+            for (int j = 0; j < numberOfPlayers; j++) {
                 try {
                     nextCard = drawCardFromPile();
                 } catch (Exception e) {
-                    // TODO: handle exception
+                    out.outputError("Not enough cards in the deck to deal starting hands.\n");
+                    return; 
                 }
-                
                 players.get(j).drawCard(nextCard);
             }
         }
@@ -286,12 +336,10 @@ public class NormalGameEngine extends AbstractGameEngine {
         try {
             scriptParser.nextCommand(this, out);
         } catch (Exception e) {
-            // TODO: handle exception
+            out.outputError("Error while executing the script: " + e.getMessage() + "\n");
         }
-        
-
     }
-
+    
     /*-------------------------------------------------------------------------------------------*/
     /*-------------------------------------------------------------------------------------------*/
 }
