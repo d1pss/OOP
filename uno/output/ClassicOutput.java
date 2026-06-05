@@ -43,7 +43,10 @@ public class ClassicOutput implements OutputCommand {
         for (int i = 0; i < players.size(); i++) {
             System.out.print("EVENT HAND player=" + i + " cards=");
             for (int j = 0; j < players.get(i).getHand().size(); j++) {
-                System.out.print(players.get(i).getHand().get(j).getCardString() + " ");
+                System.out.print(players.get(i).getHand().get(j).getCardString());
+                if (j < players.get(i).getHand().size() - 1) {
+                    System.out.print(" ");
+                }
             }
             newLine();
         }
@@ -94,7 +97,9 @@ public class ClassicOutput implements OutputCommand {
 
     @Override
     public void outputGameEndPlayerWin(int winnerPlayerId) {
-        System.out.print("EVENT GAME_END Player " + winnerPlayerId + " wins\nEVENT WINNER player=" + winnerPlayerId + "\nGAME_END\n");
+        System.out.println("EVENT GAME_END Player " + winnerPlayerId + " wins");
+        System.out.println("EVENT WINNER player=" + winnerPlayerId);
+        System.out.println("GAME_END");
     }
 
     @Override
@@ -104,7 +109,7 @@ public class ClassicOutput implements OutputCommand {
 
     @Override
     public void outputError(String errorMessage) {
-         System.out.print("EVENT ERROR " + errorMessage + "\n");
+        System.out.print("EVENT ERROR " + errorMessage + "\n");
     }
 
     @Override

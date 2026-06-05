@@ -177,6 +177,7 @@ public class NormalGameEngine extends AbstractGameEngine {
         }
         
         if (players.get(playerId).getHand().size() <= cardIndex || cardIndex < 0) {
+            out.outputError("Invalid card index\n");
             return true;
         }
 
@@ -204,14 +205,11 @@ public class NormalGameEngine extends AbstractGameEngine {
         CardEffect effect = ruleSet.getEffectOf(cardToBePlayed);
         effect.execute(this, out, playerId, cardToBePlayed);
 
-        if (drawPile.isEmpty()) {
-            return true;
-        }
-
         discardCardToPile(cardToBePlayed);
 
         if (players.get(playerId).getHand().isEmpty()) {
             out.outputGameEndPlayerWin(playerId);
+            return true;
         }
         
         if (!cardToBePlayed.isWildCard()) {

@@ -27,8 +27,11 @@ public class DrawCardsEffect implements CardEffect {
 
     @Override
     public void execute(EffectContext context, OutputCommand out, int playerId, Card cardUsed) {
+        //next player id
+        int nextPlayerId = context.nextPlayerId();
+
         // Identify the target (the next player in the current direction of play)
-        Player target = context.getReadOnlyPlayersList().get(context.nextPlayerId());
+        Player target = context.getReadOnlyPlayersList().get(nextPlayerId);
 
         // Force the target to draw the specified amount of cards
         context.drawCards(target, amount);
@@ -37,6 +40,6 @@ public class DrawCardsEffect implements CardEffect {
         context.skipPlayers(1);
 
         // Output the event to the terminal (logging the action)
-        out.outputDrawCard(context.nextPlayerId(), amount);
+        out.outputDrawCard(nextPlayerId, amount);
     }
 }

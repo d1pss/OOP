@@ -31,7 +31,7 @@ public class ClassicRule extends AbstractRule {
     public boolean isPlayable(Card topCard, Card playedCard, String currentColorAfterWildCard) {
         
         // Wild cards can always be played
-        if (playedCard.getCardType().equals("W")) { 
+        if (playedCard.getCardColor().equals("W")) { 
             return true;
         }
 
