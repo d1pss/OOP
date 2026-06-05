@@ -1,7 +1,6 @@
 package uno.rules;
 
 import java.util.Map;
-
 import uno.cardEffect.*;
 import uno.cards.Card;
 
@@ -13,31 +12,17 @@ public class ClassicRule extends AbstractRule{
 
     @Override
     public boolean isNumberOfPlayersValid(int numberOfPlayers){
-        if(numberOfPlayers >= 2 && numberOfPlayers <= 6) return true;
-        return false;
+        return (numberOfPlayers >= 2 && numberOfPlayers <= 6);
     }
 
 
     @Override
     public boolean isPlayable(Card topCard, Card playedCard, String currentColorAfterWildCard){
         
-        if (playedCard.getCardType().equals("W")) { 
-            return true;
-        }
-
-        if (playedCard.getCardColor().equals(topCard.getCardColor())) {
-            return true;
-        }
-
-        if(playedCard.getCardColor().equals(currentColorAfterWildCard) && topCard.isWildCard()){
-
-        }
-
-        if (playedCard.getCardType().equals(topCard.getCardType())) {
-            return true;
-        }
-
-        return false;
+        return (playedCard.getCardType().equals("W") || 
+                playedCard.getCardColor().equals(topCard.getCardColor()) || 
+                playedCard.getCardColor().equals(currentColorAfterWildCard) && topCard.isWildCard() || 
+                playedCard.getCardType().equals(topCard.getCardType()));
     }
 
     @Override
