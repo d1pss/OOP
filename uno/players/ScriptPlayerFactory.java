@@ -2,8 +2,8 @@ package uno.players;
 
 /**
  * A concrete implementation of the {@link PlayerFactory} interface.
- * This factory is specifically dedicated to instantiating {@link ScriptPlayer} objects,
- * which are utilized when the game is driven by an automated script rather than human input.
+ * <p>This factory is specifically dedicated to instantiating {@link ScriptPlayer} objects,
+ * which are utilized when the game is driven by an automated script rather than human input.</p>
  */
 public class ScriptPlayerFactory implements PlayerFactory {
     

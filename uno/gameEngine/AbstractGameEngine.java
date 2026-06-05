@@ -14,10 +14,10 @@ import uno.parser.*;
 
 /**
  * Provides a foundational implementation for the UNO game engine.
- * This abstract class holds the central game state (players, piles, turn direction) 
+ * <p>This abstract class holds the central game state (players, piles, turn direction) 
  * and orchestrates the interaction between cards, rules, parsers, and the output system.
  * It implements {@link EffectContext} to allow card effects to manipulate the game state safely,
- * and {@link GameCommands} to receive and process instructions from the script parser.
+ * and {@link GameCommands} to receive and process instructions from the script parser.</p>
  */
 public abstract class AbstractGameEngine implements EffectContext, GameCommands {
 

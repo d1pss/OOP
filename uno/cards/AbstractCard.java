@@ -3,9 +3,9 @@ package uno.cards;
 /**
  * Provides a abstract implementation of the {@link Card} interface to minimize 
  * the effort required to implement it.
- * * This abstract class handles the common state (color and type) and the standard 
+ * <p>This abstract class handles the common state (color and type) and the standard 
  * string representation for all cards in the game. Subclasses only need to provide 
- * the specific logic for determining if they are numeric or wild cards.
+ * the specific logic for determining if they are numeric or wild cards.</p>
  */
 public abstract class AbstractCard implements Card {
     

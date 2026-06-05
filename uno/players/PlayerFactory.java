@@ -2,8 +2,8 @@ package uno.players;
 
 /**
  * A factory interface responsible for creating {@link Player} instances.
- * By implementing this interface, the game engine can dynamically instantiate 
- * different types of players without being tightly coupled to their concrete classes.
+ * <p>By implementing this interface, the game engine can dynamically instantiate 
+ * different types of players without being tightly coupled to their concrete classes.</p>
  */
 public interface PlayerFactory {
     

@@ -5,9 +5,9 @@ import uno.cards.CardFactory;
 
 /**
  * A concrete implementation of the {@link CardFactory} interface for the extended ruleset.
- * This factory is responsible for instantiating {@link ExtendedCard} objects, allowing 
+ * <p>This factory is responsible for instantiating {@link ExtendedCard} objects, allowing 
  * the game engine to seamlessly load and play with new, extended card types 
- * (such as DRAW_THREE) without requiring any modifications to the core loading system.
+ * (such as DRAW_THREE) without requiring any modifications to the core loading system.</p>
  */
 public class ExtendedCardFactory implements CardFactory {
 

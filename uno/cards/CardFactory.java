@@ -2,9 +2,9 @@ package uno.cards;
 
 /**
  * A factory interface responsible for creating {@link Card} objects.
- * This interface abstracts the instantiation process, allowing the game engine
+ * <p>This interface abstracts the instantiation process, allowing the game engine
  * to create different types of cards (e.g., Classic cards or Extended cards)
- * without being coupled to their specific concrete classes.
+ * without being coupled to their specific concrete classes.</p>
  */
 public interface CardFactory {
 

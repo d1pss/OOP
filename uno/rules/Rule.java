@@ -5,9 +5,9 @@ import uno.cardEffect.*;
 
 /**
  * Defines the core ruleset contract for the UNO game.
- * Implementing classes dictate the fundamental game logic, including 
+ * <p>Implementing classes dictate the fundamental game logic, including 
  * player capacity validation, legal move verification, and the resolution 
- * of card effects.
+ * of card effects.</p>
  */
 public interface Rule {
 

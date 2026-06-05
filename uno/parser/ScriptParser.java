@@ -7,8 +7,8 @@ import uno.output.OutputCommand;
 
 /**
  * Defines the contract for parsing and executing the automated game script.
- * Implementing classes are responsible for reading sequential commands from a data source 
- * (like a text file) and translating them into concrete actions within the game engine.
+ * <p>Implementing classes are responsible for reading sequential commands from a data source 
+ * (like a text file) and translating them into concrete actions within the game engine.</p>
  */
 public interface ScriptParser {
 

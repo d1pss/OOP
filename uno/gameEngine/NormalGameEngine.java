@@ -21,9 +21,9 @@ import uno.parser.*;
 
 /**
  * The concrete implementation of the UNO game engine for the standard ruleset.
- * This class applies the Singleton design pattern to ensure only one active game 
+ * <p>This class applies the Singleton design pattern to ensure only one active game 
  * instance exists at any given time. It manages the physical execution of game mechanics, 
- * including pile management, turn rotation, and command processing.
+ * including pile management, turn rotation, and command processing.</p>
  */
 public class NormalGameEngine extends AbstractGameEngine {
 

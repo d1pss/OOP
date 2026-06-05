@@ -6,8 +6,8 @@ import uno.players.Player;
 
 /**
  * Provides a restricted execution environment for card effects.
- * This interface acts as a secure bridge between the game engine and the card effects,
- * exposing only the safe and necessary operations allowed to modify the game state.
+ * <p>This interface acts as a secure bridge between the game engine and the card effects,
+ * exposing only the safe and necessary operations allowed to modify the game state.</p>
  */
 public interface EffectContext {
 

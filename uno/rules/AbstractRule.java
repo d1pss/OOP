@@ -7,8 +7,8 @@ import uno.cards.Card;
 
 /**
  * Provides a foundational implementation for the {@link Rule} interface.
- * This class manages the association between specific card types and their corresponding 
- * {@link CardEffect}s using a Map, reducing boilerplate code for concrete rule implementations.
+ * <p>This class manages the association between specific card types and their corresponding 
+ * {@link CardEffect}s using a Map, reducing boilerplate code for concrete rule implementations.</p>
  */
 public abstract class AbstractRule implements Rule {
     

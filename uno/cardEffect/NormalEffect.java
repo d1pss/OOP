@@ -6,7 +6,7 @@ import uno.cards.Card;
 
 /**
  * Represents the default behavior for standard numeric UNO cards.
- * This effect performs no special actions and simply allows the game to proceed normally. 
+ * <p>This effect performs no special actions and simply allows the game to proceed normally.</p>
  */
 public class NormalEffect implements CardEffect {
 

@@ -4,8 +4,8 @@ import uno.cards.Card;
 
 /**
  * A concrete implementation of a player that is controlled by the script commands.
- * This class extends {@link AbstractPlayer} and provides the concrete mechanics 
- * for adding and removing cards from the player hand during the game.
+ * <p>This class extends {@link AbstractPlayer} and provides the concrete mechanics 
+ * for adding and removing cards from the player hand during the game.</p>
  */
 public class ScriptPlayer extends AbstractPlayer {
 

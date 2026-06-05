@@ -6,9 +6,9 @@ import uno.cards.Card;
 
 /**
  * Provides a skeletal implementation of the {@link Player} interface.
- * This abstract class handles the core state common to all players in the game, 
+ * <p>This abstract class handles the core state common to all players in the game, 
  * specifically their unique identifier and the management of their hand of cards.
- * Subclasses only need to define the specific behaviors for placing and drawing cards.
+ * Subclasses only need to define the specific behaviors for placing and drawing cards.</p>
  */
 public abstract class AbstractPlayer implements Player {
     

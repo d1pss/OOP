@@ -4,8 +4,8 @@ import uno.cards.AbstractCard;
 
 /**
  * Represents an extended playing card in the UNO game.
- * This class builds upon the base card functionality by introducing new special 
- * card types (such as "DRAW_THREE") into the classification logic.
+ * <p>This class builds upon the base card functionality by introducing new special 
+ * card types (such as "DRAW_THREE") into the classification logic.</p>
  */
 public class ExtendedCard extends AbstractCard {
 

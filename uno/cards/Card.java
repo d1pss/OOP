@@ -2,10 +2,10 @@ package uno.cards;
 
 /**
  * Represents a playing card in the UNO game.
- * Defines the core attributes and behaviors expected from any card, 
+ * <p>Defines the core attributes and behaviors expected from any card, 
  * including its color, type (rank), and string representation. 
  * This contract allows the game engine to handle numeric, action, 
- * and wild cards uniformly, while supporting future extensions.
+ * and wild cards uniformly, while supporting future extensions.</p>
  */
 public interface Card {
     

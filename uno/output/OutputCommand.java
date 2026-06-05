@@ -7,9 +7,9 @@ import uno.cards.Card;
 
 /**
  * Defines the contract for the game output and logging system.
- * This interface abstracts the presentation layer, allowing the game engine 
+ * <p>This interface abstracts the presentation layer, allowing the game engine 
  * to remain completely decoupled from how events are displayed (e.g., terminal, 
- * graphical user interface, or a log file).
+ * graphical user interface, or a log file).</p>
  */
 public interface OutputCommand {
     

@@ -6,7 +6,7 @@ import uno.cards.Card;
 
 /**
  * Represents an effect that reverses the current direction of play.
- * When executed, the turn order switches.
+ * <p>When executed, the turn order switches.</p>
  */
 public class ReverseEffect implements CardEffect {
 

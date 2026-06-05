@@ -6,9 +6,9 @@ import uno.cards.Card;
 
 /**
  * Represents the classic ruleset for the UNO game.
- * This class implements the specific validation logic for determining 
+ * <p>This class implements the specific validation logic for determining 
  * valid player counts, legal card plays, and retrieving the appropriate 
- * effects for classic UNO cards.
+ * effects for classic UNO cards.</p>
  */
 public class ClassicRule extends AbstractRule {
 

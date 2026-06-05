@@ -6,9 +6,9 @@ import uno.cards.Card;
 
 /**
  * Defines the contract for a participant in the UNO game.
- * This interface establishes the essential behaviors required 
+ * <p>This interface establishes the essential behaviors required 
  * for any player to interact with the game engine, 
- * manage their identity, and manipulate their hand of cards.
+ * manage their identity, and manipulate their hand of cards.</p>
  */
 public interface Player {
 

@@ -6,8 +6,8 @@ import uno.cards.Card;
 
 /**
  * Represents the specific behavior or action associated with a card in the UNO game.
- * Implementing classes define how the game state should change when a particular
- * card (e.g., SKIP, DRAW_TWO, or custom extensions) is played.
+ * <p>Implementing classes define how the game state should change when a particular
+ * card (e.g., SKIP, DRAW_TWO, or custom extensions) is played.</p>
  */
 public interface CardEffect {
 

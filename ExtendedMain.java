@@ -21,7 +21,7 @@ import unoExtended.cards.ExtendedCardFactory;
 
 /**
  * The main entry point for the Extended (Crazy) version of the UNO game.
- * This class handles the initialization of the game engine.
+ * <p>This class handles the initialization of the game engine.</p>
  */
 public class ExtendedMain {
     

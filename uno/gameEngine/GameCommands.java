@@ -2,8 +2,8 @@ package uno.gameEngine;
 
 /**
  * Defines the core actions the script can execute during the UNO game.
- * This interface acts as the primary API for the game engine, receiving commands from the 
- * script parser, processing them, and returning a status flag to control the execution loop.
+ * <p>This interface acts as the primary API for the game engine, receiving commands from the 
+ * script parser, processing them, and returning a status flag to control the execution loop.</p>
  */
 public interface GameCommands {
     

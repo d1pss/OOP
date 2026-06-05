@@ -7,9 +7,9 @@ import uno.cards.Card;
 
 /**
  * Concrete implementation of the {@link OutputCommand} interface.
- * This class is responsible for logging all game events, actions, and errors 
+ * <p>This class is responsible for logging all game events, actions, and errors 
  * to the standard terminal output (console). It formats the output string 
- * according to the specific strict requirements of the classic UNO game engine.
+ * according to the specific strict requirements of the classic UNO game engine.</p>
  */
 public class ClassicOutput implements OutputCommand {
 

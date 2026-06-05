@@ -2,10 +2,10 @@ package uno.cards;
 
 /**
  * A concrete implementation of the {@link CardFactory} interface.
- * This factory is specifically responsible for instantiating standard 
+ * <p>This factory is specifically responsible for instantiating standard 
  * {@link ClassicCard} objects used in the base version of the UNO game.
  * It strictly follows the Factory design pattern to encapsulate card creation 
- * and decouple the game engine from concrete card classes.
+ * and decouple the game engine from concrete card classes.</p>
  */
 public class ClassicCardFactory implements CardFactory {
 

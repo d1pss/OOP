@@ -1,27 +1,26 @@
+// Java libs
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.HashMap;
-import java.util.Map; // Java libs
-import uno.cardEffect.CardEffect;
-import uno.cardEffect.DrawCardsEffect;
-import uno.cardEffect.ReverseEffect;
-import uno.cardEffect.SkipEffect;
-import uno.cardEffect.WildEffect;
+import java.util.Map;
+
+// Game libs
+import uno.cardEffect.*;
 import uno.cards.ClassicCardFactory;
 import uno.gameEngine.NormalGameEngine;
 import uno.output.ClassicOutput;
 import uno.parser.NormalDeckLoader;
 import uno.parser.NormalScriptParserFactory;
 import uno.players.ScriptPlayerFactory;
-import uno.rules.ClassicRule; // Game libs
+import uno.rules.ClassicRule; 
 
 
 /**
  * The main entry point for the standard (Classic) version of the UNO game.
- * This class handles the initialization of the game engine by wiring together 
- * the standard base components: classic rules, classic cards, and default card effects.
+ * <p>This class handles the initialization of the game engine by wiring together 
+ * the standard base components: classic rules, classic cards, and default card effects.</p>
  */
 public class Main {
     

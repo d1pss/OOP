@@ -4,8 +4,8 @@ import java.io.Reader;
 
 /**
  * A factory interface responsible for instantiating {@link ScriptParser} objects.
- * Implementing this interface allows the game engine to dynamically load different 
- * script parsing strategies without being tightly coupled to their concrete implementations.
+ * <p>Implementing this interface allows the game engine to dynamically load different 
+ * script parsing strategies without being tightly coupled to their concrete implementations.</p>
  */
 public interface ScriptParserFactory {
 

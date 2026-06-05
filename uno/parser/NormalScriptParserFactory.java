@@ -4,9 +4,9 @@ import java.io.Reader;
 
 /**
  * A concrete implementation of the {@link ScriptParserFactory} interface.
- * This factory is specifically responsible for instantiating the {@link NormalScriptParser} 
+ * <p>This factory is specifically responsible for instantiating the {@link NormalScriptParser} 
  * used in the standard ruleset of the UNO game. By using this factory, the game engine 
- * is completely decoupled from the concrete parser implementation.
+ * is completely decoupled from the concrete parser implementation.</p>
  */
 public class NormalScriptParserFactory implements ScriptParserFactory {
 

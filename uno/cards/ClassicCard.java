@@ -2,8 +2,8 @@ package uno.cards;
 
 /**
  * Represents a standard UNO card used in the classic version of the game.
- * This concrete class implements the specific rules for identifying standard numeric cards,
- * action cards (Skip, Reverse, Draw Two), and wild cards based on their color and type.
+ * <p>This concrete class implements the specific rules for identifying standard numeric cards,
+ * action cards (Skip, Reverse, Draw Two), and wild cards based on their color and type.</p>
  */
 public class ClassicCard extends AbstractCard {
 
