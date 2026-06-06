@@ -68,6 +68,8 @@ public class NormalGameEngine extends AbstractGameEngine {
     /*--------------------------------------- Effects Context -----------------------------------*/
     /*-------------------------------------------------------------------------------------------*/
 
+    private boolean noMoreCardsToDraw = false; // Flag to indicate if the draw pile is empty and no more cards can be drawn
+
     @Override
     public void drawCards(Player player, int numberCardsToDraw) {
         Card cardDrawn = null;
@@ -76,6 +78,7 @@ public class NormalGameEngine extends AbstractGameEngine {
                 cardDrawn = drawCardFromPile();
             } catch (Exception e) {
                 out.outputGameEndNoWinners();
+                noMoreCardsToDraw = true; // Set the flag to indicate that no more cards can be drawn
                 return;
             }
             player.drawCard(cardDrawn);
@@ -204,6 +207,10 @@ public class NormalGameEngine extends AbstractGameEngine {
 
         CardEffect effect = ruleSet.getEffectOf(cardToBePlayed);
         effect.execute(this, out, playerId, cardToBePlayed);
+
+        if (noMoreCardsToDraw) {
+            return true; // End the game if there are no more cards to draw
+        }
 
         discardCardToPile(cardToBePlayed);
 
