@@ -18,6 +18,8 @@ import uno.players.ScriptPlayerFactory;
 import uno.rules.ClassicRule;
 import uno.cards.CardFactory;
 import uno.cards.ClassicCardFactory;
+import uno.rules.Rule;
+import unoExtended.rules.ExtendedRule;
 
 import unoExtended.cards.ExtendedCardFactory;
 
@@ -80,14 +82,18 @@ public class ExtendedMain {
         }else{
             cardFactory = new ClassicCardFactory(); // Use the standard CardFactory for classic cards
         }
+
+        Rule rule = null;
         if ("CrazyRuleset".equals(extensionName) && "ruleset".equals(extensionType)) {
             // if the extension is CrazyRuleset, we replace the classic effects with more aggressive versions
             cardEffects.put("SKIP", new SkipEffect(2)); 
             cardEffects.put("DRAW_TWO", new DrawCardsEffect(3)); 
+            rule = new ExtendedRule(cardEffects); // Use the ExtendedRule to apply the new ruleset
         }else{
             // for any other extension, we keep the classic effects
             cardEffects.put("SKIP", new SkipEffect(1)); 
             cardEffects.put("DRAW_TWO", new DrawCardsEffect(2));
+            rule = new ClassicRule(cardEffects); // Use the ClassicRule for standard rules
         }
 
         // Instantiate the Singleton Game Engine with the Extended dependencies
@@ -96,7 +102,7 @@ public class ExtendedMain {
             cardsPerPlayer,
             cardFactory, 
             new ScriptPlayerFactory(), 
-            new ClassicRule(cardEffects), 
+            rule, 
             new ClassicOutput(), 
             new NormalDeckLoader(), 
             new NormalScriptParserFactory()
